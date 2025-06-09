@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boozer (BOOZ) - Coming Soon!</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;700&display=swap');
+
         body {
             margin: 0;
-            font-family: "Comic Sans MS", cursive;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #FFB300, #FF4081);
             color: #FFFFFF;
             text-align: center;
@@ -31,13 +33,22 @@
             margin: 20px 0;
         }
         h1 {
+            font-family: 'Bangers', cursive;
             font-size: 3em;
             text-shadow: 2px 2px #FF4081;
             margin: 10px 0;
         }
         p {
+            font-family: 'Poppins', sans-serif;
             font-size: 1.5em;
             margin: 10px 0;
+            font-weight: 700;
+        }
+        .social-links a {
+            margin: 0 10px;
+            color: #FFFFFF;
+            text-decoration: underline;
+            font-size: 1.2em;
         }
         .bubbles {
             position: fixed;
@@ -68,7 +79,11 @@
     <img src="boozer-mascot.png" alt="Boozer Mascot" class="mascot-img">
     <img src="boozer-logo.png" alt="Boozer Logo" class="logo-img">
     <p>BOOZ It Up! Sip the Crypto Craze! 🍻</p>
-    <p>Follow us on <a href="https://x.com/boozer_coin" target="_blank" style="color: #FFFFFF; text-decoration: underline;">X</a> for updates!</p>
+    <div class="social-links">
+        <p>Connect with us:</p>
+        <a href="https://x.com/boozer_coin" target="_blank">X</a> |
+        <a href="https://discord.gg/NTThcf8z" target="_blank">Discord</a>
+    </div>
     <div class="bubbles" style="left: 10%; animation-delay: 0s;"></div>
     <div class="bubbles" style="left: 30%; animation-delay: 1s;"></div>
     <div class="bubbles" style="left: 50%; animation-delay: 2s;"></div>
