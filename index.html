@@ -133,55 +133,67 @@
         const colors = ['#FFB300', '#FF4081', '#FFC107', '#FF80AB', '#FF9800', '#F06292', '#FFD54F', '#E91E63', '#FFCA28', '#F48FB1'];
 
         let spinning = false;
+        let currentAngle = 0; // Track current wheel rotation
 
-        function drawWheel() {
+        function easeOutQuad(t) {
+            return t * (2 - t); // Smooth easing for spin
+        }
+
+        function drawWheel(angle) {
             if (!ctx) {
                 console.error('Canvas context not available');
                 return;
             }
-            const angle = (2 * Math.PI) / rewards.length;
+            const segmentAngle = (2 * Math.PI) / rewards.length;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw segments
+            ctx.save();
+            ctx.translate(200, 200);
+            ctx.rotate(angle);
             for (let i = 0; i < rewards.length; i++) {
                 ctx.beginPath();
-                ctx.moveTo(200, 200);
-                ctx.arc(200, 200, 180, i * angle, (i + 1) * angle);
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, 180, i * segmentAngle, (i + 1) * segmentAngle);
                 ctx.fillStyle = colors[i % colors.length];
                 ctx.fill();
                 ctx.strokeStyle = '#000';
                 ctx.lineWidth = 5;
                 ctx.stroke();
 
+                // Draw segment dot
                 ctx.beginPath();
-                ctx.arc(200 + 180 * Math.cos(i * angle - Math.PI / 2), 200 + 180 * Math.sin(i * angle - Math.PI / 2), 5, 0, 2 * Math.PI);
+                ctx.arc(180 * Math.cos(i * segmentAngle - Math.PI / 2), 180 * Math.sin(i * segmentAngle - Math.PI / 2), 5, 0, 2 * Math.PI);
                 ctx.fillStyle = '#FFD700';
                 ctx.fill();
 
+                // Draw segment text
                 ctx.save();
-                ctx.translate(200, 200);
-                ctx.rotate((i + 0.5) * angle);
+                ctx.rotate((i + 0.5) * segmentAngle);
                 ctx.fillStyle = '#FFF';
                 ctx.font = '14px Poppins';
                 ctx.fillText(rewards[i], 90, 5);
                 ctx.restore();
             }
-            ctx.beginPath();
-            ctx.arc(200, 200, 20, 0, 2 * Math.PI);
-            ctx.fillStyle = '#000';
-            ctx.fill();
 
-            // Draw arrow on the wheel (aligned with first segment)
-            ctx.save();
-            ctx.translate(200, 200);
+            // Draw arrow on wheel (aligned with first segment)
             ctx.beginPath();
-            ctx.moveTo(0, -180); // Tip at outer edge
+            ctx.moveTo(0, -180); // Tip
             ctx.lineTo(10, -160); // Right wing
             ctx.lineTo(-10, -160); // Left wing
             ctx.closePath();
-            ctx.fillStyle = '#FFFFFF'; // White fill
-            ctx.strokeStyle = '#000000'; // Black outline
+            ctx.fillStyle = '#FFFFFF';
+            ctx.strokeStyle = '#000000';
             ctx.lineWidth = 2;
             ctx.fill();
             ctx.stroke();
+
+            // Draw center circle
+            ctx.beginPath();
+            ctx.arc(0, 0, 20, 0, 2 * Math.PI);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+
             ctx.restore();
         }
 
@@ -197,23 +209,27 @@
 
             spinning = true;
             spinButton.disabled = true;
-            const randomDegrees = 360 * 5 + Math.floor(Math.random() * 360);
+            const targetSegment = Math.floor(Math.random() * rewards.length); // Random segment (0–9)
+            const targetAngle = targetSegment * (360 / rewards.length); // Target stop angle (degrees)
+            const spins = 5 * 360; // 5 full rotations
+            const finalAngle = spins + targetAngle + (Math.random() * 36); // Random offset within segment
+            const duration = 5000; // 5 seconds
+            const startAngle = currentAngle;
             const startTime = performance.now();
-            const duration = 5000;
 
             function animate(currentTime) {
-                const progress = Math.min((currentTime - startTime) / duration, 1);
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easeOutQuad(progress);
+                const angle = startAngle + (finalAngle - startAngle) * easedProgress;
+
+                drawWheel((angle * Math.PI) / 180); // Convert to radians
+
                 if (progress < 1) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.save();
-                    ctx.translate(200, 200);
-                    ctx.rotate((2 * Math.PI * progress * (randomDegrees / 360)) % (2 * Math.PI));
-                    ctx.translate(-200, -200);
-                    drawWheel();
-                    ctx.restore();
                     requestAnimationFrame(animate);
                 } else {
-                    const segment = Math.floor((randomDegrees % 360) / (360 / rewards.length));
+                    currentAngle = angle % 360; // Update current angle
+                    const segment = Math.floor((currentAngle % 360) / (360 / rewards.length));
                     resultElement.textContent = `You won: ${rewards[segment]}!`;
                     spinning = false;
                     spinButton.disabled = false;
@@ -226,7 +242,7 @@
 
         // Initialize wheel and attach event listener
         if (canvas && ctx) {
-            drawWheel();
+            drawWheel(0);
             spinButton.addEventListener('click', spinWheel);
             console.log('Event listener attached');
         } else {
