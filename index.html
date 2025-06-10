@@ -133,10 +133,10 @@
         const colors = ['#FFB300', '#FF4081', '#FFC107', '#FF80AB', '#FF9800', '#F06292', '#FFD54F', '#E91E63', '#FFCA28', '#F48FB1'];
 
         let spinning = false;
-        let currentAngle = 0; // Track current wheel rotation
+        let currentAngle = 0; // Track wheel rotation (degrees)
 
         function easeOutQuad(t) {
-            return t * (2 - t); // Smooth easing for spin
+            return t * (2 - t); // Smooth easing
         }
 
         function drawWheel(angle) {
@@ -144,13 +144,13 @@
                 console.error('Canvas context not available');
                 return;
             }
-            const segmentAngle = (2 * Math.PI) / rewards.length;
+            const segmentAngle = (2 * Math.PI) / rewards.length; // 36° in radians
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Draw segments
             ctx.save();
             ctx.translate(200, 200);
-            ctx.rotate(angle);
+            ctx.rotate(-angle * (Math.PI / 180)); // Counterclockwise rotation
             for (let i = 0; i < rewards.length; i++) {
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
@@ -176,19 +176,19 @@
                 ctx.restore();
             }
 
-            // Draw arrow on wheel (aligned with first segment)
+            // Draw arrow attached to black center circle
             ctx.beginPath();
-            ctx.moveTo(0, -180); // Tip
-            ctx.lineTo(10, -160); // Right wing
-            ctx.lineTo(-10, -160); // Left wing
+            ctx.moveTo(0, -20); // Base at circle's edge (radius 20px)
+            ctx.lineTo(10, -50); // Tip at radius 50px
+            ctx.lineTo(-10, -50); // Other wing
             ctx.closePath();
-            ctx.fillStyle = '#FFFFFF';
-            ctx.strokeStyle = '#000000';
+            ctx.fillStyle = '#FFFFFF'; // White fill
+            ctx.strokeStyle = '#000000'; // Black outline
             ctx.lineWidth = 2;
             ctx.fill();
             ctx.stroke();
 
-            // Draw center circle
+            // Draw black center circle
             ctx.beginPath();
             ctx.arc(0, 0, 20, 0, 2 * Math.PI);
             ctx.fillStyle = '#000';
@@ -209,10 +209,11 @@
 
             spinning = true;
             spinButton.disabled = true;
-            const targetSegment = Math.floor(Math.random() * rewards.length); // Random segment (0–9)
-            const targetAngle = targetSegment * (360 / rewards.length); // Target stop angle (degrees)
+            const targetSegment = Math.floor(Math.random() * rewards.length); // 0–9
+            const segmentAngle = 360 / rewards.length; // 36°
+            const targetAngle = targetSegment * segmentAngle; // e.g., 0°, 36°, 252°
             const spins = 5 * 360; // 5 full rotations
-            const finalAngle = spins + targetAngle + (Math.random() * 36); // Random offset within segment
+            const finalAngle = spins + targetAngle + (Math.random() * segmentAngle); // Random offset
             const duration = 5000; // 5 seconds
             const startAngle = currentAngle;
             const startTime = performance.now();
@@ -223,16 +224,17 @@
                 const easedProgress = easeOutQuad(progress);
                 const angle = startAngle + (finalAngle - startAngle) * easedProgress;
 
-                drawWheel((angle * Math.PI) / 180); // Convert to radians
+                drawWheel(angle);
 
                 if (progress < 1) {
                     requestAnimationFrame(animate);
                 } else {
-                    currentAngle = angle % 360; // Update current angle
-                    const segment = Math.floor((currentAngle % 360) / (360 / rewards.length));
+                    currentAngle = angle % 360; // Normalize angle
+                    const segment = Math.floor(((currentAngle % 360) + 360) % 360 / segmentAngle);
                     resultElement.textContent = `You won: ${rewards[segment]}!`;
                     spinning = false;
                     spinButton.disabled = false;
+                    console.log('Target Segment:', targetSegment, 'Final Angle:', currentAngle, 'Result Segment:', segment);
                 }
             }
 
