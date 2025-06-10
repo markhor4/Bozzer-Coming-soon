@@ -145,7 +145,6 @@
         const colors = ['#FFB300', '#FF4081', '#FFC107', '#FF80AB', '#FF9800', '#F06292', '#FFD54F', '#E91E63', '#FFCA28', '#F48FB1'];
 
         let spinning = false;
-        let lastSpin = localStorage.getItem('lastSpin');
 
         function drawWheel() {
             if (!ctx) {
@@ -188,8 +187,8 @@
                 resultElement.textContent = 'Error: Canvas not supported!';
                 return;
             }
-            if (spinning || (lastSpin && new Date().toDateString() === new Date(lastSpin).toDateString())) {
-                resultElement.textContent = 'Save your spin for tomorrow, party champ!';
+            if (spinning) {
+                resultElement.textContent = 'Wheel is already spinning!';
                 return;
             }
 
@@ -214,7 +213,6 @@
                     const segment = Math.floor((randomDegrees % 360) / (360 / rewards.length));
                     resultElement.textContent = `You won: ${rewards[segment]}!`;
                     spinning = false;
-                    localStorage.setItem('lastSpin', new Date());
                     spinButton.disabled = false;
                 }
             }
@@ -230,12 +228,6 @@
             console.log('Event listener attached');
         } else {
             console.error('Canvas or context not found');
-        }
-
-        // Check daily spin limit
-        if (lastSpin && new Date().toDateString() === new Date(lastSpin).toDateString()) {
-            spinButton.disabled = true;
-            resultElement.textContent = 'Save your spin for tomorrow, party champ!';
         }
     </script>
 </body>
