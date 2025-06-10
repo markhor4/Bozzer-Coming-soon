@@ -176,19 +176,7 @@
                 ctx.restore();
             }
 
-            // Draw arrow attached to black center circle
-            ctx.beginPath();
-            ctx.moveTo(0, -20); // Base at circle's edge (radius 20px)
-            ctx.lineTo(10, -50); // Tip at radius 50px
-            ctx.lineTo(-10, -50); // Other wing
-            ctx.closePath();
-            ctx.fillStyle = '#FFFFFF'; // White fill
-            ctx.strokeStyle = '#000000'; // Black outline
-            ctx.lineWidth = 2;
-            ctx.fill();
-            ctx.stroke();
-
-            // Draw black center circle
+            // Draw black center circle (no arrow)
             ctx.beginPath();
             ctx.arc(0, 0, 20, 0, 2 * Math.PI);
             ctx.fillStyle = '#000';
