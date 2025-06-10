@@ -138,16 +138,20 @@
 
     <script>
         const canvas = document.getElementById('wheel-canvas');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas?.getContext('2d');
         const spinButton = document.getElementById('spin-button');
         const resultElement = document.getElementById('result');
-        const rewards = ['25 BOOZ', 'Cheers', '50 BOOZ', 'Try Again', '100 BOOZ', '0 BOOZ', '250 BOOZ', 'Come Again', '500 BOOZ', 'Free Spin'];
+        const rewards = ['25 BOOZ', 'Cheers', '50 BOOZ', 'Try Again, Champ!', '100 BOOZ', '0 BOOZ', '250 BOOZ', 'Come Again', '500 BOOZ', 'Free Spin'];
         const colors = ['#FFB300', '#FF4081', '#FFC107', '#FF80AB', '#FF9800', '#F06292', '#FFD54F', '#E91E63', '#FFCA28', '#F48FB1'];
 
         let spinning = false;
         let lastSpin = localStorage.getItem('lastSpin');
 
         function drawWheel() {
+            if (!ctx) {
+                console.error('Canvas context not available');
+                return;
+            }
             const angle = (2 * Math.PI) / rewards.length;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < rewards.length; i++) {
@@ -160,7 +164,6 @@
                 ctx.lineWidth = 5;
                 ctx.stroke();
 
-                // Draw yellow dots on the border
                 ctx.beginPath();
                 ctx.arc(200 + 180 * Math.cos(i * angle - Math.PI / 2), 200 + 180 * Math.sin(i * angle - Math.PI / 2), 5, 0, 2 * Math.PI);
                 ctx.fillStyle = '#FFD700';
@@ -171,7 +174,7 @@
                 ctx.rotate((i + 0.5) * angle);
                 ctx.fillStyle = '#FFF';
                 ctx.font = '14px Poppins';
-                ctx.fillText(rewards[i], 90, 5); // Adjusted text position for readability
+                ctx.fillText(rewards[i], 90, 5);
                 ctx.restore();
             }
             ctx.beginPath();
@@ -181,6 +184,10 @@
         }
 
         function spinWheel() {
+            if (!ctx) {
+                resultElement.textContent = 'Error: Canvas not supported!';
+                return;
+            }
             if (spinning || (lastSpin && new Date().toDateString() === new Date(lastSpin).toDateString())) {
                 resultElement.textContent = 'Save your spin for tomorrow, party champ!';
                 return;
@@ -189,12 +196,11 @@
             spinning = true;
             spinButton.disabled = true;
             const randomDegrees = 360 * 3 + Math.floor(Math.random() * 360);
+            const startTime = performance.now();
             const duration = 5000;
-            let startTime = null;
 
             function animate(currentTime) {
-                if (!startTime) startTime = currentTime;
-                const progress = (currentTime - startTime) / duration;
+                const progress = Math.min((currentTime - startTime) / duration, 1);
                 if (progress < 1) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.save();
@@ -214,11 +220,19 @@
             }
 
             requestAnimationFrame(animate);
+            console.log('Spin started');
         }
 
-        drawWheel();
-        spinButton.addEventListener('click', spinWheel);
+        // Initialize wheel and attach event listener
+        if (canvas && ctx) {
+            drawWheel();
+            spinButton.addEventListener('click', spinWheel);
+            console.log('Event listener attached');
+        } else {
+            console.error('Canvas or context not found');
+        }
 
+        // Check daily spin limit
         if (lastSpin && new Date().toDateString() === new Date(lastSpin).toDateString()) {
             spinButton.disabled = true;
             resultElement.textContent = 'Save your spin for tomorrow, party champ!';
