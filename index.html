@@ -62,6 +62,27 @@
         #wheel-canvas {
             max-width: 400px;
             margin: 20px auto;
+            position: relative;
+        }
+        #pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid #FFB300;
+        }
+        #base {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 10px;
+            background: #333;
         }
         #spin-button {
             font-family: 'Poppins', sans-serif;
@@ -72,6 +93,7 @@
             color: #FFFFFF;
             cursor: pointer;
             border-radius: 5px;
+            margin-top: 10px;
         }
         #spin-button:disabled {
             background: #FF80AB;
@@ -94,7 +116,11 @@
     <!-- Boozer Wheel Game Section -->
     <div id="wheel-game">
         <h2>Boozer Wheel - Demo</h2>
-        <canvas id="wheel-canvas" width="400" height="400"></canvas>
+        <div id="wheel-container">
+            <canvas id="wheel-canvas" width="400" height="400"></canvas>
+            <div id="pointer"></div>
+            <div id="base"></div>
+        </div>
         <button id="spin-button">Spin!</button>
         <p id="result"></p>
         <p>One spin per day. Demo mode - original game coming post-launch!</p>
@@ -115,7 +141,7 @@
         const ctx = canvas.getContext('2d');
         const spinButton = document.getElementById('spin-button');
         const resultElement = document.getElementById('result');
-        const rewards = ['25 BOOZ', 'Cheers', '50 BOOZ', 'Try Again', '100 BOOZ', 'Better Luck Next Time', '250 BOOZ', 'Come Again', '500 BOOZ', 'Free Spin'];
+        const rewards = ['25 BOOZ', 'Cheers', '50 BOOZ', 'Try Again, Champ!', '100 BOOZ', '0 BOOZ', '250 BOOZ', 'Come Again', '500 BOOZ', 'Free Spin'];
         const colors = ['#FFB300', '#FF4081', '#FFC107', '#FF80AB', '#FF9800', '#F06292', '#FFD54F', '#E91E63', '#FFCA28', '#F48FB1'];
 
         let spinning = false;
@@ -131,15 +157,21 @@
                 ctx.fillStyle = colors[i % colors.length];
                 ctx.fill();
                 ctx.strokeStyle = '#000';
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 5;
                 ctx.stroke();
+
+                // Draw yellow dots on the border
+                ctx.beginPath();
+                ctx.arc(200 + 180 * Math.cos(i * angle - Math.PI / 2), 200 + 180 * Math.sin(i * angle - Math.PI / 2), 5, 0, 2 * Math.PI);
+                ctx.fillStyle = '#FFD700';
+                ctx.fill();
 
                 ctx.save();
                 ctx.translate(200, 200);
                 ctx.rotate((i + 0.5) * angle);
                 ctx.fillStyle = '#FFF';
-                ctx.font = '16px Poppins';
-                ctx.fillText(rewards[i], 80, 10);
+                ctx.font = '14px Poppins';
+                ctx.fillText(rewards[i], 90, 5); // Adjusted text position for readability
                 ctx.restore();
             }
             ctx.beginPath();
@@ -187,7 +219,6 @@
         drawWheel();
         spinButton.addEventListener('click', spinWheel);
 
-        // Check if spin is available today
         if (lastSpin && new Date().toDateString() === new Date(lastSpin).toDateString()) {
             spinButton.disabled = true;
             resultElement.textContent = 'You can only spin once per day!';
