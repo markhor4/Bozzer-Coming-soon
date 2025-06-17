@@ -248,13 +248,6 @@ p {
     color: #000000; /* Black */
 }
 
-#wheel-game {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
 .game-container {
     width: 400px; /* Fixed width for wheel canvas */
     margin: 20px auto;
@@ -264,21 +257,12 @@ p {
     width: 400px; /* Match wheel canvas width */
     height: auto;
     max-height: 400px; /* Ensure it doesn't exceed wheel height */
-    margin: 20px 0; /* Center vertically with spacing */
+    margin: 20px auto; /* Center the image with spacing */
 }
 
 /* Media Query for Desktop (min-width: 768px) */
 @media (min-width: 768px) {
-    #wheel-game {
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 20px; /* Space between elements */
-    }
-    .game-container {
-        margin: 0; /* Remove margin on desktop */
-    }
     .game-image {
-        margin: 0; /* Remove margin on desktop */
+        margin: 40px auto; /* Increased margin for better spacing on desktop */
     }
 }
