@@ -250,9 +250,9 @@ p {
 
 .game-container {
     display: flex;
-    justify-content: space-between; /* Pushes canvas to left and image to extreme right */
+    justify-content: center;
     align-items: center;
-    max-width: 820px; /* 400px (canvas) + 400px (image) + 20px (gap) */
+    max-width: 400px; /* Limit to wheel width on mobile */
     margin: 20px auto;
 }
 
@@ -260,4 +260,30 @@ p {
     width: 400px; /* Match wheel canvas width */
     height: auto;
     max-height: 400px; /* Ensure it doesn't exceed wheel height */
+    display: none; /* Hidden by default on mobile, shown on desktop */
+}
+
+/* Media Query for Desktop (min-width: 768px) */
+@media (min-width: 768px) {
+    .game-container {
+        max-width: 820px; /* 400px (canvas) + 400px (image) + 20px (gap) */
+        justify-content: space-between; /* Side by side on desktop */
+    }
+    .game-image {
+        display: block; /* Show image on desktop */
+    }
+}
+
+/* Ensure image below text on mobile */
+.about-boozer-mobile {
+    display: block; /* Show image below text on mobile */
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+@media (min-width: 768px) {
+    .about-boozer-mobile {
+        display: none; /* Hide on desktop */
+    }
 }
