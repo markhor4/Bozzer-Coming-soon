@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Roboto:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #FFB300, #FF4081);
+    color: #000000; /* Black for all text except specified white sections */
+    text-align: center;
+    overflow-x: hidden;
+}
+
+.header-img {
+    width: 100%; /* Full width for banner */
+    height: auto;
+    margin: 20px 0;
+}
+
+.mascot-img, .logo-img {
+    width: 100%;
+    max-width: 1024px; /* Limit for mascot and logo */
+    height: auto;
+    margin: 20px 0;
+}
+
+.logo-small {
+    width: 150px; /* Small size for logo */
+    height: auto;
+    margin: 10px 0;
+}
+
+.logo-reduced {
+    width: 300px; /* Reduced size for logo after key features */
+    height: auto;
+    margin: 20px 0;
+}
+
+h1, h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 3em;
+    text-shadow: 2px 2px #333333; /* Dark gray shadow for contrast */
+    margin: 10px 0;
+    color: #FFFFFF; /* White for "Coming Soon!" and headers */
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5em;
+    margin: 10px 0;
+    font-weight: 400; /* Regular weight for readability */
+    color: #000000; /* Black for body text */
+}
+
+#timer {
+    font-size: 1.5em;
+    font-weight: 700;
+    text-shadow: 1px 1px #333333;
+}
+
+.timer-black {
+    color: #FFFFFF; /* White for timer text */
+    font-weight: 700; /* Ensure bold */
+    margin: 0; /* Remove default margin to align with label */
+}
+
+.timer-label {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 0; /* Align with timer */
+    color: #FFFFFF; /* White for "Presale Starts In" */
+}
+
+.catchy-line {
+    font-family: 'Bangers', cursive;
+    font-size: 3em;
+    text-shadow: 2px 2px #333333; /* Dark gray shadow */
+    margin: 10px 0;
+    color: #FFFFFF; /* White */
+}
+
+.key-features-title {
+    font-family: 'Bangers', cursive;
+    font-size: 3em;
+    text-shadow: 2px 2px #333333; /* Dark gray shadow */
+    margin: 10px 0;
+    color: #FFFFFF; /* White */
+}
+
+.key-features p {
+    font-size: 1.5em;
+    margin: 5px 0;
+    font-weight: 700;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #000000; /* Black */
+}
+
+.key-features p:first-child {
+    font-size: 1.7em;
+    font-weight: 800;
+    color: #000000; /* Black */
+}
+
+.social-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Slight background for contrast */
+    border-radius: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.social-title {
+    font-family: 'Bangers', cursive;
+    font-size: 3em;
+    text-shadow: 2px 2px #333333; /* Dark gray shadow */
+    margin: 10px 0;
+    color: #FFFFFF; /* White */
+}
+
+.social-section p {
+    font-size: 1.6em;
+    margin: 5px 0;
+    font-weight: 700;
+    color: #000000; /* Black */
+}
+
+.social-buttons {
+    margin-top: 15px;
+}
+
+.social-button {
+    display: inline-block;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    margin: 0 10px;
+    background: #FFD700; /* Gold background */
+    color: #333333; /* Dark gray text */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.social-button:hover {
+    background: #FF80AB; /* Pinkish hover for style */
+    color: #FFFFFF; /* White text on hover */
+}
+
+.disclaimer {
+    margin: 20px 0;
+    padding: 15px; /* Reduced padding */
+    background: rgba(0, 0, 0, 0.1); /* Darker background for contrast */
+    border-radius: 10px;
+    max-width: 600px; /* Reduced width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.disclaimer h1 {
+    font-family: 'Bangers', cursive;
+    font-size: 3em; /* Match Coming Soon! size */
+    text-shadow: 2px 2px #333333; /* Dark gray shadow */
+    margin: 10px 0;
+    color: #FFFFFF; /* White */
+}
+
+.disclaimer p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875em; /* 14px based on 16px default */
+    margin: 5px 0;
+    font-weight: 400;
+    color: #FFFFFF; /* White */
+}
+
+.copyright {
+    margin: 20px 0;
+    padding: 10px;
+    font-size: 1em;
+    font-weight: 400;
+    color: #000000; /* Black */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bubbles {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: float 5s infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); }
+    100% { transform: translateY(-20px); }
+}
+
+.beer-emoji {
+    font-size: 2em;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+#wheel-canvas {
+    max-width: 400px;
+    margin: 20px auto;
+    position: relative;
+}
+
+#base {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 10px;
+    background: #333;
+}
+
+#spin-button {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    background: #FFD700; /* Gold */
+    border: none;
+    color: #333333; /* Dark gray */
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#spin-button:disabled {
+    background: #FF80AB; /* Pinkish disabled */
+    cursor: not-allowed;
+}
+
+#result {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #000000; /* Black */
+}
