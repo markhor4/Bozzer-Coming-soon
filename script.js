@@ -1,44 +1,15 @@
-// Wheel Game Variables
 const canvas = document.getElementById('wheel-canvas');
 const ctx = canvas?.getContext('2d');
 const spinButton = document.getElementById('spin-button');
 const resultElement = document.getElementById('result');
-const timerElement = document.getElementById('timer');
 const rewards = ['25 BOOZ', 'Cheers', '50 BOOZ', 'Try Again', '100 BOOZ', '0 BOOZ', '250 BOOZ', 'Come Again', '500 BOOZ', 'Free Spin'];
 const colors = ['#FFB300', '#FF4081', '#FFC107', '#FF80AB', '#FF9800', '#F06292', '#FFD54F', '#E91E63', '#FFCA28', '#F48FB1'];
 
 let spinning = false;
 let currentAngle = 0;
 
-// Timer Logic
-const targetDate = new Date('2025-07-05T14:00:00Z').getTime(); // July 5, 2025, 14:00 UTC
-
-function updateTimer() {
-    if (!timerElement) {
-        console.error('Timer element not found');
-        return;
-    }
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-
-    if (distance < 0) {
-        timerElement.textContent = 'Presale Live!';
-        return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    timerElement.textContent = `${days} d ${hours.toString().padStart(2, '0')} h ${minutes.toString().padStart(2, '0')} m ${seconds.toString().padStart(2, '0')} s`;
-}
-
-setInterval(updateTimer, 1000);
-updateTimer(); // Initial call
-
 function easeOutQuad(t) {
-    return t * (2 - t); // Smooth easing
+    return t * (2 - t);
 }
 
 function drawWheel(angle) {
@@ -119,7 +90,7 @@ function spinWheel() {
             const segment = Math.floor(((currentAngle % 360) + 360) % 360 / segmentAngle);
             resultElement.textContent = `You won: ${rewards[segment]}!`;
             spinning = false;
-            spinButton.disabled = false; // Ensured this line is complete
+            spinButton.disabled = false;
             console.log('Target Segment:', targetSegment, 'Final Angle:', currentAngle, 'Result Segment:', segment);
         }
     }
@@ -128,7 +99,6 @@ function spinWheel() {
     console.log('Spin started');
 }
 
-// Initialize wheel and attach event listener
 if (canvas && ctx) {
     drawWheel(0);
     spinButton.addEventListener('click', spinWheel);
