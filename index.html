@@ -3,68 +3,577 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boozer (BOOZ) - Coming Soon!</title>
-    <link rel="stylesheet" href="./styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Boozer - The Solana Meme Coin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Poppins:wght@400;600;800&display=swap');
+        
+        :root {
+            --primary: #FF006E;
+            --secondary: #8338EC;
+            --accent: #FB5607;
+            --light: #FFBE0B;
+            --dark: #3A086B;
+            --bright: #3A86FF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* First Section - Hero with Video */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+        }
+        
+        .hero-title {
+            font-family: 'Comic Neue', cursive;
+            font-size: 5rem;
+            background: linear-gradient(45deg, var(--light), var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(255, 190, 11, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .hero-btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .btn-audio {
+            background: linear-gradient(45deg, var(--bright), var(--secondary));
+        }
+        
+        .btn-buy {
+            background: linear-gradient(45deg, var(--light), var(--accent));
+        }
+        
+        .btn-join {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+        }
+        
+        /* Second Section - Three GIFs Background with Content */
+        .gif-section {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .gif-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+        
+        .gif-column {
+            flex: 1;
+            min-width: 33.33%;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* LARGER GIFS */
+        .gif-column img {
+            width: 95%;
+            height: 60vh;
+            object-fit: contain;
+            border-radius: 15px;
+            border: 3px solid var(--light);
+            box-shadow: 0 0 20px rgba(255, 190, 11, 0.5);
+        }
+        
+        .gif-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+            z-index: 2;
+        }
+        
+        .scroll-content {
+            position: relative;
+            z-index: 3;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 80px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+        
+        .text-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h2 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 2.8rem;
+            margin: 25px 0;
+            background: linear-gradient(45deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+        }
+        
+        h3 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 2rem;
+            margin: 20px 0;
+            color: var(--light);
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        .buy-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--light), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            margin: 15px;
+        }
+        
+        .buy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .roadmap-phase {
+            margin: 20px 0;
+            padding: 20px;
+        }
+        
+        .phase-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--light);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .social-icon {
+            font-size: 3rem;
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+       .footer {
+    text-align: center;
+    padding: 30px;
+    background: rgba(238, 6, 6, 0.185);
+    color: rgba(255, 255, 255, 0.125);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 20px 0;
+}
+
+.footer-icon {
+    font-size: 2.5rem;
+    color: var(--light);
+    transition: all 0.3s ease;
+}
+
+.footer-icon:hover {
+    color: var(--primary);
+    transform: translateY(-5px);
+}
+
+.disclaimer {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: var(--light);
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+        
+        .highlight {
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+        
+        /* Additional 2 GIFs Section */
+        .additional-gifs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        
+        .additional-gif {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .additional-gif img {
+            width: 100%;
+            height: 60vh;
+            object-fit: contain;
+            border-radius: 15px;
+            border: 3px solid var(--bright);
+            box-shadow: 0 0 20px rgba(58, 134, 255, 0.5);
+        }
+        
+        .gif-caption {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            color: var(--light);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            h3 {
+                font-size: 1.6rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .gif-background {
+                flex-direction: column;
+            }
+            
+            .gif-column {
+                min-width: 100%;
+                height: 33.33vh;
+            }
+            
+            .gif-column img {
+                width: 90%;
+                height: 35vh;
+            }
+            
+            .scroll-content {
+                padding: 60px 20px;
+                gap: 40px;
+            }
+            
+            .footer-social {
+                gap: 20px;
+            }
+            
+            .footer-icon {
+                font-size: 2rem;
+            }
+            
+            .additional-gif {
+                min-width: 100%;
+            }
+            
+            .additional-gif img {
+                height: 40vh;
+            }
+        }
+    </style>
 </head>
 <body>
-    <img src="boozer-banner.png" alt="Boozer Banner" class="header-img">
-    <h1>Coming Soon!</h1>
-    <img src="boozer-logo.png" alt="Boozer Logo Small" class="logo-small">
-    <h1 class="catchy-line">Don’t Miss the BOOZ Bash or Bust Your Crypto Gut! 😂</h1>
-    <div class="introduction">
-        <h1>Introduction</h1>
-        <p>🍺 Boozer (BOOZCOIN) — The Wildest Meme Coin on Solana! 🚀</p>
-        <p>🎰 BOOZER — Powered by memes, fueled by hops!</p>
-        <p>🚀 From the bar to the blockchain — it's Booz o'clock!</p>
-        <p>🎉 The only coin that throws a party with every pump!</p>
-        <p>"🧠 Brain says no. Booz says YOLO!</p>
-        <p>🤑 Because sometimes, your wallet deserves to get drunk too!</p>
-        <p>🍻 BOOZER isn’t just a coin, it’s a lifestyle with a hangover!</p>
-        <p>🕺 Buy BOOZ now, or you'll be crying in your beer later.</p>
-    </div>
-    <img src="boozer-mascot.png" alt="Boozer Mascot" class="mascot-img">
-    <h1 class="key-features-title">Key Features:</h1>
-    <div class="key-features">
-        <p>⚡ Fast & Cheap on Solana</p>
-        <p>🍻 Meme + Utility = Boozer Games & Airdrops</p>
-        <p>🎯 Presale Madness: Early sips get the biggest pours</p>
-        <p>🤝 Community First: Built for boozers, by boozers</p>
-    </div>
-    <img src="boozer-logo.png" alt="Boozer Logo" class="logo-reduced">
-    <p>BOOZ It Up! Sip the Crypto Craze! 🍻</p>
-
-    <div id="wheel-game">
-        <h2>Boozer Wheel - Demo</h2>
-        <div id="wheel-container" class="game-container">
-            <canvas id="wheel-canvas" width="400" height="400"></canvas>
+    <!-- First Section - Hero with Video -->
+    <section class="hero-section">
+        <video class="hero-video" autoplay muted loop>
+            <source src="boozer-banner1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-content">
+            <h1 class="hero-title">BOOZER</h1>
+            <p class="hero-subtitle"></p>
+            
+            <div class="hero-buttons">
+                <button class="hero-btn btn-audio" onclick="toggleAudio()">
+                    <i class="fas fa-play"></i> Play Audio
+                </button>
+                <a href="https://pump.fun" target="_blank" class="hero-btn btn-buy">
+                    <i class="fas fa-coins"></i> Buy Booz
+                </a>
+                <a href="https://x.com/boozer_coin" target="_blank" class="hero-btn btn-join">
+                    <i class="fab fa-x-twitter"></i> Join Boozer
+                </a>
+            </div>
+            <audio id="boozerAudio" src="boozer-song.mp3" loop></audio>
         </div>
-        <button id="spin-button">Spin!</button>
-        <p id="result"></p>
-        <p>Demo mode - original games coming soon!</p>
+    </section>
+
+    <!-- Second Section - Three GIFs Background with Content -->
+    <section class="gif-section">
+        <div class="gif-background">
+            <div class="gif-column">
+                <img src="boozer-dance3.gif" alt="Boozer Mascot">
+            </div>
+            <div class="gif-column">
+                <img src="boozer-buy5.gif" alt="Buy Boozer">
+            </div>
+            <div class="gif-column">
+                <img src="boozer-buy6.gif" alt="Boozer Community">
+            </div>
+        </div>
+        <div class="gif-overlay"></div>
+        
+        <div class="scroll-content">
+            <!-- About Text -->
+            <div class="text-content">
+                <h2>About Boozer</h2>
+                <p>Meet <span class="highlight">Boozer</span>, the life of the crypto party! 🎉 Born in a meme-filled tavern after one too many pints, Boozer stumbled into the crypto world and decided to stay.</p>
+                <p>Now he's here to bring fun, laughs, and maybe a few hangovers to the Solana blockchain. Boozer isn't just another meme token - he's your drinking buddy in the wild world of cryptocurrency!</p>
+            </div>
+            
+            <!-- Additional 2 GIFs -->
+            <div class="text-content">
+                <h2>Boozer Dance Party!</h2>
+                <p>Watch Boozer show off his moves on the dance floor! 💃🕺</p>
+                
+                <div class="additional-gifs">
+                    <div class="additional-gif">
+                        <img src="boozer-dance2.gif" alt="Boozer Dance 2">
+                        <p class="gif-caption">Boozer Boogie! 🕺</p>
+                    </div>
+                    <div class="additional-gif">
+                        <img src="boozer-mascot2.gif" alt="Boozer Dance 3">
+                        <p class="gif-caption">Boozer Celebration! 🎉</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Buy Text -->
+            <div id="buy" class="text-content">
+                <h2>How to Buy $BOOZ</h2>
+                <p>Getting your hands on $BOOZ is easier than finding a pub on a Friday night! Here's how:</p>
+                
+                <div class="roadmap-phase">
+                    <h3 class="phase-title"><i class="fas fa-wallet"></i> Step 1: Get a Wallet</h3>
+                    <p>Download Phantom or your favorite Solana wallet. Make sure to keep your seed phrase safer than your last beer!</p>
+                </div>
+                
+                <div class="roadmap-phase">
+                    <h3 class="phase-title"><i class="fas fa-coins"></i> Step 2: Get Some SOL</h3>
+                    <p>Buy Solana from any exchange. You'll need it for transaction fees and to swap for $BOOZ.</p>
+                </div>
+                
+                <div class="roadmap-phase">
+                    <h3 class="phase-title"><i class="fas fa-exchange-alt"></i> Step 3: Swap on Pump.fun</h3>
+                    <p>Head to Pump.fun, connect your wallet, and swap your SOL for $BOOZ. Set slippage to 1% and cheers! 🍻</p>
+                </div>
+                
+                <div>
+                    <a href="https://pump.fun" target="_blank" class="buy-btn">BUY $BOOZ ON PUMP.FUN</a>
+                </div>
+            </div>
+            
+            <!-- Roadmap Text -->
+            <div class="text-content">
+                <h2>Boozer Roadmap</h2>
+                <p>We've got big plans, and we're not just talking about our next round! Here's what's brewing:</p>
+                
+                <div class="roadmap-phase">
+                    <h3 class="phase-title"><i class="fas fa-beer"></i> Phase 1: The Keg Party (Now)</h3>
+                    <p>Launch on Pump.fun, community building, and getting listed on DexScreener. Basically, we're tapping the keg!</p>
+                </div>
+                
+                <div class="roadmap-phase">
+                    <h3 class="phase-title"><i class="fas fa-glass-cheers"></i> Phase 2: The House Party</h3>
+                    <p>CEX listings, merch store, and Boozer NFT collection. The party's getting bigger!</p>
+                </div>
+                
+                <div class="roadmap-phase">
+                    <h3 class="phase-title"><i class="fas fa-crown"></i> Phase 3: The Festival</h3>
+                    <p>Boozer-themed events, partnerships, and maybe even a real-life Boozer pub crawl. Time to get legendary!</p>
+                </div>
+            </div>
+            
+            <!-- Social Text -->
+            <div class="text-content">
+                <h2>Join the Party!</h2>
+                
+                <p>Follow us on social media to stay updated with the latest Boozer news, memes, and party announcements!</p>
+                
+                <div>
+                    <a href="https://pump.fun" target="_blank" class="buy-btn">BUY $BOOZ NOW</a>
+                    <a href="https://x.com/boozer_coin" target="_blank" class="buy-btn">FOLLOW ON X</a>
+                    <a href="https://t.me/Official_Boozcoin" target="_blank" class="buy-btn">JOIN TELEGRAM</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+    <div class="footer-social">
+        <a href="https://x.com/boozer_coin" class="footer-icon" target="_blank">
+            <i class="fab fa-x-twitter"></i>
+        </a>
+        <a href="https://t.me/Official_Boozcoin" class="footer-icon" target="_blank">
+            <i class="fab fa-telegram"></i>
+        </a>
     </div>
+    
+    <p class="disclaimer">⚠️ $BOOZ is a meme coin with no intrinsic value or expectation of financial return. Please enjoy responsibly!</p>
+    <p class="copyright">© 2023 Boozer Project. All rights reserved. Probably.</p>
+</footer>
 
-    <img src="about-boozer.png" alt="About Boozer" class="game-image">
-
-    <div class="social-section">
-        <h1 class="social-title">Join the Boozer Community! 🍺</h1>
-        <p>Follow us on our socials to stay updated!</p>
-    </div>
-
-    <div class="disclaimer">
-        <h1>Disclaimer</h1>
-        <p>BoozCoin (BOOZ) is a meme coin created for entertainment purposes only. It has no intrinsic value and is not intended as an investment. Cryptocurrencies are highly volatile and risky. Always conduct your own research (DYOR) before participating. The Boozer team is not responsible for any financial losses.</p>
-    </div>
-
-    <div class="copyright">
-        <p>© 2025 Boozer (BOOZ). All rights reserved.</p>
-    </div>
-
-    <div class="bubbles" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="bubbles" style="left: 30%; animation-delay: 1s;"></div>
-    <div class="bubbles" style="left: 50%; animation-delay: 2s;"></div>
-    <div class="bubbles" style="left: 70%; animation-delay: 3s;"></div>
-
-    <script src="./script.js"></script>
+    <script>
+        function toggleAudio() {
+            const audio = document.getElementById('boozerAudio');
+            const btnIcon = document.querySelector('.btn-audio i');
+            
+            if (audio.paused) {
+                audio.play();
+                btnIcon.classList.remove('fa-play');
+                btnIcon.classList.add('fa-pause');
+            } else {
+                audio.pause();
+                btnIcon.classList.remove('fa-pause');
+                btnIcon.classList.add('fa-play');
+            }
+        }
+        
+        // Add some interactive fun
+        document.addEventListener('DOMContentLoaded', function() {
+            const headings = document.querySelectorAll('h1, h2, h3');
+            
+            headings.forEach(heading => {
+                heading.addEventListener('mouseover', () => {
+                    heading.style.textShadow = `0 0 10px ${getRandomColor()}`;
+                });
+                
+                heading.addEventListener('mouseout', () => {
+                    heading.style.textShadow = 'none';
+                });
+            });
+            
+            function getRandomColor() {
+                const colors = ['#FF006E', '#8338EC', '#FB5607', '#FFBE0B', '#3A86FF'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+            
+            // Set audio to loop
+            const audio = document.getElementById('boozerAudio');
+            audio.loop = true;
+        });
+    </script>
 </body>
 </html>
